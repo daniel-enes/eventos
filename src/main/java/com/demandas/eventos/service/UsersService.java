@@ -1,6 +1,7 @@
 package com.demandas.eventos.service;
 
 import java.util.Date;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,11 +23,14 @@ public class UsersService {
 		
 		user.setActive(true);
 		user.setCreatedAt(new Date(System.currentTimeMillis()));
-		
-		System.out.println(user);
-		
+
 		User createdUser = usersRepository.save(user);
 		
 		return createdUser;
+	}
+
+	public Optional<User> getUserByEmail(String email) {
+
+		return usersRepository.findByEmail(email);
 	}
 }

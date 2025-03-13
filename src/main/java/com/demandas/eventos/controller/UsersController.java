@@ -1,6 +1,7 @@
 package com.demandas.eventos.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,11 +42,25 @@ public class UsersController {
 	
 	@PostMapping("/register/new")
 	public String userRegister(@Valid User user, Model model) {
+
+		Optional<User> optionalUSer = usersService.getUserByEmail(user.getEmail());
+
+
+		if(optionalUSer.isPresent()) {
+			model.addAttribute("error", "" +
+					"O email informado já existe. Tente registrar um outro e-mail." +
+					"Email already registered, try to login or register with other email");
+
+			List<UserType> userTypes = userTypesService.getAll();
+
+			model.addAttribute("userTypes", userTypes);
+			model.addAttribute("user", new User());
+
+			return "register";
+		}
 		
 		User newUser = usersService.addNew(user);
-		
-		System.out.println(newUser);
-		
+
 		return "dashboard";
 		
 	}

@@ -12,7 +12,11 @@
 
 <fieldset>
 <legend>Crie uma conta de usuário</legend>
-
+	<div th:if="${error}">
+		<h2>Erro!</h2>
+		<p>Alguns erros foram detectados: </p>
+		<p th:text="${error}"></p>
+	</div>
 	<form 
 		th:action="@{/register/new}"
 		th:object="${user}" 
