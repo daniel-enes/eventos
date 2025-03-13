@@ -4,7 +4,11 @@
 <meta charset="utf-8">
 
 <title>Criar conta</title>
-
+<style>
+	.error {
+		color: #f00;
+	}
+</style>
 </head>
 
 <body>
@@ -15,7 +19,7 @@
 	<div th:if="${error}">
 		<h2>Erro!</h2>
 		<p>Alguns erros foram detectados: </p>
-		<p th:text="${error}"></p>
+		<p th:text="${error}" class="error"></p>
 	</div>
 	<form 
 		th:action="@{/register/new}"
