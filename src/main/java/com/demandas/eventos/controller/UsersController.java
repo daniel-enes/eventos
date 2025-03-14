@@ -21,6 +21,7 @@ import com.demandas.eventos.service.UserTypesService;
 import com.demandas.eventos.service.UsersService;
 
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UsersController {
@@ -34,7 +35,7 @@ public class UsersController {
 		this.userTypesService = userTypesService;
 		this.usersService = usersService;
 	}
-	
+
 	@GetMapping("/register")
 	public String register(Model model) {
 		
@@ -64,14 +65,18 @@ public class UsersController {
 		}
 		
 		User newUser = usersService.addNew(user);
-		System.out.println(newUser);
 
-		return "redirect:/dashboard/";
+		return "redirect:/dashboard";
 		
 	}
 
 	@GetMapping("/login")
-	public String login() {
+	public String login(@RequestParam(value = "error", required = false) String error, Model model) {
+
+		if(error !=null) {
+			model.addAttribute("error", "usuário ou senha incorretos. Por favor, tente novamente");
+		}
+
 		return "login";
 	}
 
@@ -86,4 +91,10 @@ public class UsersController {
 
 		return "redirect:/";
 	}
+
+	@GetMapping("/dashboard")
+	public String dashboard() {
+		return "dashboard";
+	}
+
 }
